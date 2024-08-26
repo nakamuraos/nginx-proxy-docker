@@ -1,0 +1,18 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./conf/log.conf:/etc/nginx/conf.d/include/log.conf:ro
+      - ./conf/proxy.conf:/etc/nginx/conf.d/include/proxy.conf:ro
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./conf/site.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./conf/ip_ranges.conf:/etc/nginx/conf.d/include/ip_ranges.conf:ro
+      - ./logs:/data/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
